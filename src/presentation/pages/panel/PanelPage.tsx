@@ -1,6 +1,6 @@
 // src/presentation/pages/panel/PanelPage.tsx
 import { Link } from 'react-router-dom'
-import { PawPrint, CalendarDays, Users, FileText, Stethoscope, Syringe } from 'lucide-react'
+import { PawPrint, CalendarDays, Users, FileText, Stethoscope, Syringe, ClipboardList } from 'lucide-react'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { Rol } from '@/domain/enums/rol.enum'
 import {
@@ -61,6 +61,13 @@ const accesos: Acceso[] = [
     title: 'Vacunas',
     description: 'Registro de vacunas aplicadas.',
     icon: Syringe,
+    roles: [Rol.ADMIN, Rol.DOCTOR],
+  },
+  {
+    to: '/clinica/recetas',
+    title: 'Recetas',
+    description: 'Recetas médicas emitidas.',
+    icon: ClipboardList,
     roles: [Rol.ADMIN, Rol.DOCTOR],
   },
 ]

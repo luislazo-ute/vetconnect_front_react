@@ -26,6 +26,7 @@ const ClientesPage = lazy(() => import('../pages/pacientes/ClientesPage'))
 const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
+const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -163,8 +164,8 @@ export default function AppRouter() {
             <Route
               path="/clinica/recetas"
               element={
-                <ProtectedRoute>
-                  <PlaceholderPage title="Recetas — Johan" />
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <RecetasPage />
                 </ProtectedRoute>
               }
             />

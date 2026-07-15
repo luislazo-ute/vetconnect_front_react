@@ -99,7 +99,10 @@ export default function AppShell() {
                 <NavLink to="/clinica/vacunas" className={navLinkClass}>
                   Vacunas
                 </NavLink>
-              </>
+                <NavLink to="/clinica/recetas" className={navLinkClass}>
+                  Recetas
+                </NavLink>
+              </>  
             )}
 
             {/* Solo admin */}
