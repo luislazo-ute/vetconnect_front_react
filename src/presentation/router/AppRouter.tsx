@@ -24,6 +24,12 @@ const MascotasPage = lazy(() => import('../pages/pacientes/MascotasPage'))
 const CitasPage = lazy(() => import('../pages/pacientes/CitasPage'))
 const ClientesPage = lazy(() => import('../pages/pacientes/ClientesPage'))
 const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
+// Clínica (Johan)
+const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
+const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
+const HospitalizacionesPage = lazy(() => import('../pages/clinica/HospitalizacionesPage'))
+const HabitacionesPage = lazy(() => import('../pages/clinica/HabitacionesPage'))
+const NotificacionesPage = lazy(() => import('../pages/clinica/NotificacionesPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -149,28 +155,28 @@ export default function AppRouter() {
               }
             />
 
-            {/* Clínica (Johan) — placeholder hasta su módulo */}
+            {/* Clínica (Johan) */}
             <Route
               path="/clinica/vacunas"
               element={
-                <ProtectedRoute>
-                  <PlaceholderPage title="Vacunas — Johan" />
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <VacunasPage />
                 </ProtectedRoute>
               }
             />
             <Route
               path="/clinica/recetas"
               element={
-                <ProtectedRoute>
-                  <PlaceholderPage title="Recetas — Johan" />
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <RecetasPage />
                 </ProtectedRoute>
               }
             />
             <Route
               path="/clinica/hospitalizaciones"
               element={
-                <ProtectedRoute>
-                  <PlaceholderPage title="Hospitalizaciones — Johan" />
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <HospitalizacionesPage />
                 </ProtectedRoute>
               }
             />
@@ -178,7 +184,7 @@ export default function AppRouter() {
               path="/clinica/habitaciones"
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
-                  <PlaceholderPage title="Habitaciones — Johan" />
+                  <HabitacionesPage />
                 </ProtectedRoute>
               }
             />
@@ -186,7 +192,7 @@ export default function AppRouter() {
               path="/notificaciones"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Notificaciones — Johan" />
+                  <NotificacionesPage />
                 </ProtectedRoute>
               }
             />

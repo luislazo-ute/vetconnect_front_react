@@ -87,21 +87,40 @@ export default function AppShell() {
                 <NavLink to="/citas" className={navLinkClass}>
                   Citas
                 </NavLink>
+                <NavLink to="/notificaciones" className={navLinkClass}>
+                  Notificaciones
+                </NavLink>
               </>
             )}
 
             {/* Actos médicos: admin o doctor */}
             {isMedico && (
-              <NavLink to="/historiales" className={navLinkClass}>
-                Historiales
-              </NavLink>
+              <>
+                <NavLink to="/historiales" className={navLinkClass}>
+                  Historiales
+                </NavLink>
+                <NavLink to="/clinica/vacunas" className={navLinkClass}>
+                  Vacunas
+                </NavLink>
+                <NavLink to="/clinica/recetas" className={navLinkClass}>
+                  Recetas
+                </NavLink>
+                <NavLink to="/clinica/hospitalizaciones" className={navLinkClass}>
+                  Hospitalizaciones
+                </NavLink>
+              </>  
             )}
 
             {/* Solo admin */}
             {isAdmin && (
-              <NavLink to="/clientes" className={navLinkClass}>
-                Clientes
-              </NavLink>
+              <>
+                <NavLink to="/clientes" className={navLinkClass}>
+                  Clientes
+                </NavLink>
+                <NavLink to="/clinica/habitaciones" className={navLinkClass}>
+                  Habitaciones
+                </NavLink>
+              </>
             )}
           </nav>
 
