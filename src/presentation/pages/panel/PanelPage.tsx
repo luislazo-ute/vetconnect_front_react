@@ -1,6 +1,6 @@
 // src/presentation/pages/panel/PanelPage.tsx
 import { Link } from 'react-router-dom'
-import { PawPrint, CalendarDays, Users, FileText, Stethoscope, Syringe, ClipboardList, BedDouble } from 'lucide-react'
+import { PawPrint, CalendarDays, Users, FileText, Stethoscope, Syringe, ClipboardList, BedDouble, Bell } from 'lucide-react'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { Rol } from '@/domain/enums/rol.enum'
 import {
@@ -83,6 +83,13 @@ const accesos: Acceso[] = [
     description: 'Gestión de habitaciones.',
     icon: BedDouble,
     roles: [Rol.ADMIN],
+  },
+  {
+    to: '/notificaciones',
+    title: 'Notificaciones',
+    description: 'Notificaciones del sistema.',
+    icon: Bell,
+    roles: [Rol.ADMIN, Rol.DOCTOR, Rol.USUARIO],
   },
 ]
 

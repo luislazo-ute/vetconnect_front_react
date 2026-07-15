@@ -29,6 +29,7 @@ const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
 const HospitalizacionesPage = lazy(() => import('../pages/clinica/HospitalizacionesPage'))
 const HabitacionesPage = lazy(() => import('../pages/clinica/HabitacionesPage'))
+const NotificacionesPage = lazy(() => import('../pages/clinica/NotificacionesPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -191,7 +192,7 @@ export default function AppRouter() {
               path="/notificaciones"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Notificaciones — Johan" />
+                  <NotificacionesPage />
                 </ProtectedRoute>
               }
             />
