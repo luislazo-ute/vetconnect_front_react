@@ -6,6 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Loader2, PawPrint } from 'lucide-react'
 import { toast } from 'sonner'
+import PawBackground from '@/presentation/components/PawBackground'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { Button } from '@/presentation/components/ui/button'
 import { Input } from '@/presentation/components/ui/input'
@@ -68,6 +69,7 @@ export default function RegisterPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-muted/40 p-4">
+      <PawBackground />
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
           <div className="mb-2 flex justify-center">

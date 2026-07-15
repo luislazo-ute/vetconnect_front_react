@@ -16,6 +16,7 @@ import {
 } from '@/presentation/components/ui/dropdown-menu'
 import { Avatar, AvatarFallback } from '@/presentation/components/ui/avatar'
 import { Separator } from '@/presentation/components/ui/separator'
+import PawBackground from '@/presentation/components/PawBackground'
 
 /** Iniciales del username para el avatar. */
 function getInitials(username: string): string {
@@ -49,6 +50,7 @@ export default function AppShell() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <PawBackground />
       {/* ── Header ── */}
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-4">
