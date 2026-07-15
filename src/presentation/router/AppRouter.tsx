@@ -27,6 +27,7 @@ const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
+const HospitalizacionesPage = lazy(() => import('../pages/clinica/HospitalizacionesPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -172,8 +173,8 @@ export default function AppRouter() {
             <Route
               path="/clinica/hospitalizaciones"
               element={
-                <ProtectedRoute>
-                  <PlaceholderPage title="Hospitalizaciones — Johan" />
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <HospitalizacionesPage />
                 </ProtectedRoute>
               }
             />
