@@ -77,6 +77,13 @@ const accesos: Acceso[] = [
     icon: BedDouble,
     roles: [Rol.ADMIN, Rol.DOCTOR],
   },
+  {
+    to: '/clinica/habitaciones',
+    title: 'Habitaciones',
+    description: 'Gestión de habitaciones.',
+    icon: BedDouble,
+    roles: [Rol.ADMIN],
+  },
 ]
 
 const rolLabel: Record<Rol, string> = {

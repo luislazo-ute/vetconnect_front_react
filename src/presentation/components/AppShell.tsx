@@ -110,9 +110,14 @@ export default function AppShell() {
 
             {/* Solo admin */}
             {isAdmin && (
-              <NavLink to="/clientes" className={navLinkClass}>
-                Clientes
-              </NavLink>
+              <>
+                <NavLink to="/clientes" className={navLinkClass}>
+                  Clientes
+                </NavLink>
+                <NavLink to="/clinica/habitaciones" className={navLinkClass}>
+                  Habitaciones
+                </NavLink>
+              </>
             )}
           </nav>
 

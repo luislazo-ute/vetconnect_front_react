@@ -28,6 +28,7 @@ const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
 const HospitalizacionesPage = lazy(() => import('../pages/clinica/HospitalizacionesPage'))
+const HabitacionesPage = lazy(() => import('../pages/clinica/HabitacionesPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -182,7 +183,7 @@ export default function AppRouter() {
               path="/clinica/habitaciones"
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
-                  <PlaceholderPage title="Habitaciones — Johan" />
+                  <HabitacionesPage />
                 </ProtectedRoute>
               }
             />
