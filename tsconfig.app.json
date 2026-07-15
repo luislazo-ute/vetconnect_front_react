@@ -19,7 +19,9 @@
     /* Linting */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "erasableSyntaxOnly": true,
+    // Desactivado: usamos "parameter properties" en los use-cases
+    // (constructor(private readonly repo)) como en el tutorial de referencia.
+    "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
     "paths": {
       "@/*": ["./src/*"]
