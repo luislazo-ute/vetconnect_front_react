@@ -24,6 +24,8 @@ const MascotasPage = lazy(() => import('../pages/pacientes/MascotasPage'))
 const CitasPage = lazy(() => import('../pages/pacientes/CitasPage'))
 const ClientesPage = lazy(() => import('../pages/pacientes/ClientesPage'))
 const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
+// Clínica (Johan)
+const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -149,12 +151,12 @@ export default function AppRouter() {
               }
             />
 
-            {/* Clínica (Johan) — placeholder hasta su módulo */}
+            {/* Clínica (Johan) */}
             <Route
               path="/clinica/vacunas"
               element={
-                <ProtectedRoute>
-                  <PlaceholderPage title="Vacunas — Johan" />
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <VacunasPage />
                 </ProtectedRoute>
               }
             />

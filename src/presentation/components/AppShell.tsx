@@ -92,9 +92,14 @@ export default function AppShell() {
 
             {/* Actos médicos: admin o doctor */}
             {isMedico && (
-              <NavLink to="/historiales" className={navLinkClass}>
-                Historiales
-              </NavLink>
+              <>
+                <NavLink to="/historiales" className={navLinkClass}>
+                  Historiales
+                </NavLink>
+                <NavLink to="/clinica/vacunas" className={navLinkClass}>
+                  Vacunas
+                </NavLink>
+              </>
             )}
 
             {/* Solo admin */}
