@@ -83,63 +83,13 @@ encapsulan selectores y acciones. Repliquen este patrón en sus módulos.
 
 ---
 
-## Base que ya está lista (la usan tal cual)
+## Equipo — cómo extender el proyecto
 
-- **`apiClient`** (`infrastructure/http/axios-client.ts`): instancia Axios única.
-  Ya manda el `Authorization: Bearer` y refresca el token ante un 401
-  (con rotación de refresh + blacklist). **No creen otra instancia de Axios.**
-- **`parseApiError`**: normaliza cualquier error a `ApiException` (con `status`,
-  `detail` y `fieldErrors`). Úsenlo en el `catch` de sus adapters.
-- **Auth y roles:** `useAuth()` devuelve `user`, `rol`, `isAdmin`, `isDoctor`,
-  `isMedico`, `isAuthenticated`, y las acciones `login/register/logout`.
-- **`ProtectedRoute`** con `allowedRoles`.
-- Componentes reutilizables: `Pagination`, `StateViews` (LoadingState / ErrorState /
-  EmptyState), y todos los de `components/ui/` (shadcn).
-- Utils: `formatPrice`, `formatDate`, `toNumber` (¡los `DecimalField` de DRF llegan
-  como string, conviértanlos con `toNumber` antes de operar!).
-
----
-
-## Cómo agregar su módulo (Kevin: facturación · Johan: clínica)
-
-Sigan el flujo hexagonal. Ejemplo para un recurso `Producto`:
-
-1. **Entidad** — `domain/entities/producto.entity.ts` (la forma que devuelve la API;
-   lean el serializer del backend, no adivinen).
-2. **Port** — `domain/ports/producto.repository.ts` (interface con los métodos).
-   Para listados de solo lectura pueden reusar `ReadListRepository<T>` que ya existe.
-3. **Use case** — `application/use-cases/producto.use-case.ts` (recibe el port por
-   constructor). Para solo lectura reusen `ListUseCase<T>`.
-4. **Adapter** — `infrastructure/adapters/axios-producto.repository.ts`
-   (implementa el port usando `apiClient` y `parseApiError`). Para solo lectura
-   reusen `AxiosReadRepository<T>('/productos/')`.
-5. **Factory** — `infrastructure/factories/facturacion.factory.ts`
-   (`export const productoUseCase = new ...`).
-6. **Hook** — `presentation/hooks/useProductos.ts` (o reusen `usePaginatedList`).
-7. **Página** — `presentation/pages/facturacion/ProductosPage.tsx`
-   (`export default`, para `lazy()`).
-8. **Ruta** — en `presentation/router/AppRouter.tsx` reemplacen **solo** su
-   `<Route>` placeholder por el `lazy import` real. Sus rutas ya están creadas:
-   `/facturacion/*` (Kevin) y `/clinica/*` + `/notificaciones` (Johan).
-9. **Navegación** — agreguen su `NavLink` en `presentation/components/AppShell.tsx`
-   respetando el rol (usen los flags de `useAuth()`).
-
-### Requisitos del profe (obligatorios en cada módulo)
-
-- Toast de éxito (sonner) al crear/actualizar: `toast.success('...')`.
-- Confirmación antes de eliminar (usen `AlertDialog` de shadcn).
-- Manejar loading, error y validaciones en formularios (Zod).
-- Nada de datos mock: todo contra la API real.
-
-### Trampas del backend (ya documentadas, ahorran horas)
-
-- **No hay escritura anidada**: factura/compra/receta son planos → `POST` del padre,
-  agarrar el `id`, y `POST` por cada línea.
-- `Habitacion` usa `codigo` y `estado` (no `nombre`/`disponible`).
-- `Hospitalizacion` no tiene `estado`: se deduce de `fecha_alta` (null = activa).
-- `Receta` usa `fecha_emision` e `instrucciones`; sus detalles apuntan a `producto` (FK).
-- `Notificacion` usa `created_at`; marcar leída con `PATCH /notificaciones/<id>/marcar_leida/`.
-- `DecimalField` → llega como **string** (`"25.00"`). Convertir con `toNumber`.
+Kevin (facturación) y Johan (clínica) agregan sus módulos siguiendo el patrón
+hexagonal ya establecido. **Toda la guía de trabajo está en
+[`docs/GUIA-EQUIPO.md`](docs/GUIA-EQUIPO.md)**: piezas reutilizables ya listas,
+los 9 pasos para agregar un recurso, requisitos del profe, trampas del backend
+y checklist antes del Pull Request.
 
 ---
 
