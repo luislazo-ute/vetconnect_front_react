@@ -24,6 +24,9 @@ const MascotasPage = lazy(() => import('../pages/pacientes/MascotasPage'))
 const CitasPage = lazy(() => import('../pages/pacientes/CitasPage'))
 const ClientesPage = lazy(() => import('../pages/pacientes/ClientesPage'))
 const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
+// Facturación (Kevin)
+const ProductosPage = lazy(() => import('../pages/facturacion/ProductosPage'))
+const CategoriasProductoPage = lazy(() => import('../pages/facturacion/CategoriasProductoPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
@@ -121,12 +124,20 @@ export default function AppRouter() {
               }
             />
 
-            {/* Facturación (Kevin) — placeholder hasta su módulo */}
+            {/* Facturación (Kevin) */}
             <Route
               path="/facturacion/productos"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Productos — Kevin" />
+                  <ProductosPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/facturacion/categorias-producto"
+              element={
+                <ProtectedRoute>
+                  <CategoriasProductoPage />
                 </ProtectedRoute>
               }
             />

@@ -90,6 +90,12 @@ export default function AppShell() {
                 <NavLink to="/notificaciones" className={navLinkClass}>
                   Notificaciones
                 </NavLink>
+                <NavLink to="/facturacion/productos" className={navLinkClass}>
+                  Productos
+                </NavLink>
+                <NavLink to="/facturacion/categorias-producto" className={navLinkClass}>
+                  Categorías
+                </NavLink>
               </>
             )}
 
