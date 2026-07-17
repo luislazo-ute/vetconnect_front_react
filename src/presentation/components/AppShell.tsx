@@ -90,6 +90,15 @@ export default function AppShell() {
                 <NavLink to="/notificaciones" className={navLinkClass}>
                   Notificaciones
                 </NavLink>
+                <NavLink to="/facturacion/productos" className={navLinkClass}>
+                  Productos
+                </NavLink>
+                <NavLink to="/facturacion/categorias-producto" className={navLinkClass}>
+                  Categorías
+                </NavLink>
+                <NavLink to="/facturacion/facturas" className={navLinkClass}>
+                  Facturas
+                </NavLink>
               </>
             )}
 
@@ -119,6 +128,12 @@ export default function AppShell() {
                 </NavLink>
                 <NavLink to="/clinica/habitaciones" className={navLinkClass}>
                   Habitaciones
+                </NavLink>
+                <NavLink to="/facturacion/proveedores" className={navLinkClass}>
+                  Proveedores
+                </NavLink>
+                <NavLink to="/facturacion/compras" className={navLinkClass}>
+                  Compras
                 </NavLink>
               </>
             )}

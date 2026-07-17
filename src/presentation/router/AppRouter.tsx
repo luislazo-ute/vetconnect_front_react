@@ -5,7 +5,7 @@ import { useAuthStore } from '@/presentation/store/auth.store'
 import { Rol } from '@/domain/enums/rol.enum'
 import ProtectedRoute from './ProtectedRoute'
 import AppShell from '@/presentation/components/AppShell'
-import PlaceholderPage from '../pages/PlaceholderPage'
+
 
 // ─── Lazy imports ───────────────────────────────────────────────────────────
 // Auth (sin shell)
@@ -24,6 +24,12 @@ const MascotasPage = lazy(() => import('../pages/pacientes/MascotasPage'))
 const CitasPage = lazy(() => import('../pages/pacientes/CitasPage'))
 const ClientesPage = lazy(() => import('../pages/pacientes/ClientesPage'))
 const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
+// Facturación (Kevin)
+const ProductosPage = lazy(() => import('../pages/facturacion/ProductosPage'))
+const CategoriasProductoPage = lazy(() => import('../pages/facturacion/CategoriasProductoPage'))
+const ProveedoresPage = lazy(() => import('../pages/facturacion/ProveedoresPage'))
+const FacturasPage = lazy(() => import('../pages/facturacion/FacturasPage'))
+const ComprasPage = lazy(() => import('../pages/facturacion/ComprasPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
@@ -121,12 +127,20 @@ export default function AppRouter() {
               }
             />
 
-            {/* Facturación (Kevin) — placeholder hasta su módulo */}
+            {/* Facturación (Kevin) */}
             <Route
               path="/facturacion/productos"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Productos — Kevin" />
+                  <ProductosPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/facturacion/categorias-producto"
+              element={
+                <ProtectedRoute>
+                  <CategoriasProductoPage />
                 </ProtectedRoute>
               }
             />
@@ -134,7 +148,7 @@ export default function AppRouter() {
               path="/facturacion/facturas"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Facturas — Kevin" />
+                  <FacturasPage />
                 </ProtectedRoute>
               }
             />
@@ -142,7 +156,7 @@ export default function AppRouter() {
               path="/facturacion/proveedores"
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
-                  <PlaceholderPage title="Proveedores — Kevin" />
+                  <ProveedoresPage />
                 </ProtectedRoute>
               }
             />
@@ -150,7 +164,7 @@ export default function AppRouter() {
               path="/facturacion/compras"
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
-                  <PlaceholderPage title="Compras — Kevin" />
+                  <ComprasPage />
                 </ProtectedRoute>
               }
             />
