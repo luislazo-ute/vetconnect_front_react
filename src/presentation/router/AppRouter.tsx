@@ -28,6 +28,7 @@ const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
 const ProductosPage = lazy(() => import('../pages/facturacion/ProductosPage'))
 const CategoriasProductoPage = lazy(() => import('../pages/facturacion/CategoriasProductoPage'))
 const ProveedoresPage = lazy(() => import('../pages/facturacion/ProveedoresPage'))
+const FacturasPage = lazy(() => import('../pages/facturacion/FacturasPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
@@ -146,7 +147,7 @@ export default function AppRouter() {
               path="/facturacion/facturas"
               element={
                 <ProtectedRoute>
-                  <PlaceholderPage title="Facturas — Kevin" />
+                  <FacturasPage />
                 </ProtectedRoute>
               }
             />
