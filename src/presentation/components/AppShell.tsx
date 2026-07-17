@@ -78,7 +78,13 @@ export default function AppShell() {
     { to: '/mascotas', label: 'Mascotas' },
     { to: '/citas', label: 'Citas' },
     ...(isMedico ? [{ to: '/historiales', label: 'Historiales' }] : []),
-    ...(isAdmin ? [{ to: '/clientes', label: 'Clientes' }] : []),
+    ...(isAdmin
+      ? [
+          { to: '/clientes', label: 'Clientes' },
+          { to: '/veterinarios', label: 'Veterinarios' },
+          { to: '/usuarios', label: 'Usuarios' },
+        ]
+      : []),
   ]
 
   const facturacion: NavItem[] = [

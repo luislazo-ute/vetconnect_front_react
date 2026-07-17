@@ -24,6 +24,8 @@ const MascotasPage = lazy(() => import('../pages/pacientes/MascotasPage'))
 const CitasPage = lazy(() => import('../pages/pacientes/CitasPage'))
 const ClientesPage = lazy(() => import('../pages/pacientes/ClientesPage'))
 const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
+const VeterinariosPage = lazy(() => import('../pages/pacientes/VeterinariosPage'))
+const UsuariosPage = lazy(() => import('../pages/pacientes/UsuariosPage'))
 // Facturación (Kevin)
 const ProductosPage = lazy(() => import('../pages/facturacion/ProductosPage'))
 const CategoriasProductoPage = lazy(() => import('../pages/facturacion/CategoriasProductoPage'))
@@ -124,6 +126,22 @@ export default function AppRouter() {
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
                   <ClientesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/veterinarios"
+              element={
+                <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
+                  <VeterinariosPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/usuarios"
+              element={
+                <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
+                  <UsuariosPage />
                 </ProtectedRoute>
               }
             />

@@ -1,25 +1,22 @@
-// src/presentation/hooks/usePaginatedList.ts
+// src/presentation/hooks/useCrud.ts
 import { useCallback, useEffect, useState } from 'react'
-import type { Paginated } from '@/domain/entities/paginated.entity'
+import type { CrudUseCase } from '@/application/use-cases/crud.use-case'
 
 const PAGE_SIZE = 10
 
-/** Cualquier use-case con un método de listado paginado (ListUseCase o CrudUseCase). */
-interface Listable<T> {
-  list(page?: number, search?: string): Promise<Paginated<T>>
-}
-
 /**
- * Hook genérico para consumir cualquier use-case con `list()` paginado.
- * Encapsula estado de carga, error, página actual y búsqueda.
+ * Hook genérico de CRUD paginado. Envuelve un CrudUseCase<T> y expone estado de
+ * lista + acciones create/update/remove. Las páginas lo consumen en vez de tocar
+ * el use-case directamente.
  */
-export function usePaginatedList<T>(useCase: Listable<T>) {
+export function useCrud<T extends { id: number }>(useCase: CrudUseCase<T>) {
   const [items, setItems] = useState<T[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [search, setSearchState] = useState('')
+  const [submitting, setSubmitting] = useState(false)
 
   const fetchPage = useCallback(
     async (p: number, q: string) => {
@@ -45,14 +42,48 @@ export function usePaginatedList<T>(useCase: Listable<T>) {
     fetchPage(1, '')
   }, [fetchPage])
 
+  async function create(data: Partial<T>) {
+    setSubmitting(true)
+    try {
+      await useCase.create(data)
+      await fetchPage(page, search)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function update(id: number, data: Partial<T>) {
+    setSubmitting(true)
+    try {
+      await useCase.update(id, data)
+      await fetchPage(page, search)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  async function remove(id: number) {
+    setSubmitting(true)
+    try {
+      await useCase.delete(id)
+      await fetchPage(page, search)
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
   return {
     items,
     isLoading,
     error,
     page,
     totalPages,
+    submitting,
     goToPage: (p: number) => fetchPage(p, search),
     setSearch: (q: string) => fetchPage(1, q),
     reload: () => fetchPage(page, search),
+    create,
+    update,
+    remove,
   }
 }

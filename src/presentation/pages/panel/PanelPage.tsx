@@ -1,6 +1,6 @@
 // src/presentation/pages/panel/PanelPage.tsx
 import { Link } from 'react-router-dom'
-import { PawPrint, CalendarDays, Users, FileText, Stethoscope, Syringe, ClipboardList, BedDouble, Bell } from 'lucide-react'
+import { PawPrint, CalendarDays, Users, FileText, Stethoscope, Syringe, ClipboardList, BedDouble, Bell, UserCog, Database, Briefcase } from 'lucide-react'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { Rol } from '@/domain/enums/rol.enum'
 import {
@@ -48,6 +48,27 @@ const accesos: Acceso[] = [
     description: 'Directorio de clientes.',
     icon: Users,
     roles: [Rol.ADMIN],
+  },
+  {
+    to: '/veterinarios',
+    title: 'Veterinarios',
+    description: 'Gestiona el equipo médico.',
+    icon: Briefcase,
+    roles: [Rol.ADMIN],
+  },
+  {
+    to: '/usuarios',
+    title: 'Usuarios',
+    description: 'Cuentas del sistema.',
+    icon: UserCog,
+    roles: [Rol.ADMIN],
+  },
+  {
+    to: '/registros-clinicos',
+    title: 'Registros clínicos',
+    description: 'Datos de MongoDB: consultas, monitoreo, galería.',
+    icon: Database,
+    roles: [Rol.ADMIN, Rol.DOCTOR],
   },
   {
     to: '/perfil',
