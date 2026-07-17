@@ -5,6 +5,7 @@ import { z } from 'zod'
 import { toast } from 'sonner'
 import { Plus, Pencil, Trash2, Search } from 'lucide-react'
 import { useHabitaciones } from '@/presentation/hooks/useHabitaciones'
+import { useAuth } from '@/presentation/hooks/useAuth'
 import { Button } from '@/presentation/components/ui/button'
 import { Input } from '@/presentation/components/ui/input'
 import { Label } from '@/presentation/components/ui/label'
@@ -36,6 +37,7 @@ type HabitacionFormData = z.infer<typeof habitacionSchema>
 
 export default function HabitacionesPage() {
   const { items, isLoading, error, page, totalPages, goToPage, setSearch, reload, create, update, remove, submitting } = useHabitaciones()
+  const { isAdmin } = useAuth() // habitaciones: solo el admin escribe
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState<typeof items[number] | null>(null)
@@ -108,11 +110,13 @@ export default function HabitacionesPage() {
           <p className="text-muted-foreground">Gestión de habitaciones de hospitalización.</p>
         </div>
         <Dialog open={open} onOpenChange={setOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={openCreate}>
-              <Plus className="mr-2 h-4 w-4" />Nueva habitación
-            </Button>
-          </DialogTrigger>
+          {isAdmin && (
+            <DialogTrigger asChild>
+              <Button onClick={openCreate}>
+                <Plus className="mr-2 h-4 w-4" />Nueva habitación
+              </Button>
+            </DialogTrigger>
+          )}
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>{editing ? 'Editar habitación' : 'Nueva habitación'}</DialogTitle>
@@ -177,7 +181,7 @@ export default function HabitacionesPage() {
                   <TableHead>Precio/día</TableHead>
                   <TableHead>Cap.</TableHead>
                   <TableHead>Estado</TableHead>
-                  <TableHead className="w-24">Acciones</TableHead>
+                  {isAdmin && <TableHead className="w-24">Acciones</TableHead>}
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -190,6 +194,7 @@ export default function HabitacionesPage() {
                     <TableCell>
                       <Badge variant={estadoColor[h.estado] ?? 'outline'}>{h.estado}</Badge>
                     </TableCell>
+                    {isAdmin && (
                     <TableCell>
                       <div className="flex gap-1">
                         <Button variant="ghost" size="icon" onClick={() => openEdit(h)}>
@@ -216,6 +221,7 @@ export default function HabitacionesPage() {
                         </AlertDialog>
                       </div>
                     </TableCell>
+                    )}
                   </TableRow>
                 ))}
               </TableBody>
