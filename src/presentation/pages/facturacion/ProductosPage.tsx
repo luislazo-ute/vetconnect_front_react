@@ -1,11 +1,12 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { useState, useEffect } from 'react'
+import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { toast } from 'sonner'
 import { Plus, Pencil, Trash2, Search } from 'lucide-react'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { useProductos } from '@/presentation/hooks/useProductos'
+import { useCategoriasProducto } from '@/presentation/hooks/useCategoriasProducto'
 import { formatPrice, toNumber } from '@/presentation/utils/formatters'
 import { Button } from '@/presentation/components/ui/button'
 import { Input } from '@/presentation/components/ui/input'
@@ -23,6 +24,9 @@ import {
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/presentation/components/ui/alert-dialog'
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from '@/presentation/components/ui/select'
 import Pagination from '@/presentation/components/Pagination'
 import { LoadingState, ErrorState, EmptyState } from '@/presentation/components/StateViews'
 
@@ -41,14 +45,19 @@ type ProductoFormData = z.infer<typeof productoSchema>
 
 export default function ProductosPage() {
   const { items, isLoading, error, page, totalPages, goToPage, setSearch, reload, create, update, remove, submitting } = useProductos()
+  const { items: categorias, reload: reloadCategorias } = useCategoriasProducto()
   const { isAdmin } = useAuth()
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [editing, setEditing] = useState<typeof items[number] | null>(null)
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<ProductoFormData>({
+  const { register, handleSubmit, control, reset, formState: { errors } } = useForm<ProductoFormData>({
     resolver: zodResolver(productoSchema),
   })
+
+  useEffect(() => {
+    if (open) reloadCategorias()
+  }, [open])
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault()
@@ -138,8 +147,23 @@ export default function ProductosPage() {
                     {errors.precio_venta && <p className="text-xs text-destructive">{errors.precio_venta.message}</p>}
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="categoria">ID Categoría</Label>
-                    <Input id="categoria" type="number" {...register('categoria', { valueAsNumber: true })} aria-invalid={!!errors.categoria} />
+                    <Label htmlFor="categoria">Categoría</Label>
+                    <Controller
+                      name="categoria"
+                      control={control}
+                      render={({ field }) => (
+                        <Select onValueChange={(v) => field.onChange(Number(v))} value={String(field.value || '')}>
+                          <SelectTrigger aria-invalid={!!errors.categoria}>
+                            <SelectValue placeholder="Seleccionar categoría" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {categorias.map((c) => (
+                              <SelectItem key={c.id} value={String(c.id)}>{c.nombre}</SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      )}
+                    />
                     {errors.categoria && <p className="text-xs text-destructive">{errors.categoria.message}</p>}
                   </div>
                 </div>
