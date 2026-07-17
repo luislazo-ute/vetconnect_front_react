@@ -5,7 +5,7 @@ import { useAuthStore } from '@/presentation/store/auth.store'
 import { Rol } from '@/domain/enums/rol.enum'
 import ProtectedRoute from './ProtectedRoute'
 import AppShell from '@/presentation/components/AppShell'
-import PlaceholderPage from '../pages/PlaceholderPage'
+
 
 // ─── Lazy imports ───────────────────────────────────────────────────────────
 // Auth (sin shell)
@@ -29,6 +29,7 @@ const ProductosPage = lazy(() => import('../pages/facturacion/ProductosPage'))
 const CategoriasProductoPage = lazy(() => import('../pages/facturacion/CategoriasProductoPage'))
 const ProveedoresPage = lazy(() => import('../pages/facturacion/ProveedoresPage'))
 const FacturasPage = lazy(() => import('../pages/facturacion/FacturasPage'))
+const ComprasPage = lazy(() => import('../pages/facturacion/ComprasPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
@@ -163,7 +164,7 @@ export default function AppRouter() {
               path="/facturacion/compras"
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
-                  <PlaceholderPage title="Compras — Kevin" />
+                  <ComprasPage />
                 </ProtectedRoute>
               }
             />
