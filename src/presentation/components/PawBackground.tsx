@@ -9,7 +9,7 @@ export default function PawBackground() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 -z-10 text-primary opacity-[0.05]"
+      className="pointer-events-none fixed inset-0 -z-10 text-primary opacity-[0.05] dark:text-white dark:opacity-[0.07]"
     >
       <svg width="100%" height="100%">
         <defs>
