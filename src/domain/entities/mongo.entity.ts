@@ -6,11 +6,19 @@ export interface FotoGaleria {
   descripcion: string
 }
 
+/**
+ * Documento de galería. La colección tiene DOS formas conviviendo:
+ *  - antigua: un álbum con `fotos: [{url, descripcion}]`
+ *  - nueva (móvil): una sola foto con `url` directa, sin `fotos`
+ * Por eso `fotos`, `url` y `mascota_nombre` son opcionales.
+ */
 export interface GaleriaMascota {
   _id: string
   mascota_id: number
   descripcion: string
-  fotos: FotoGaleria[]
+  fotos?: FotoGaleria[]
+  url?: string
+  mascota_nombre?: string
   created_at: string
 }
 

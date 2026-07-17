@@ -198,16 +198,22 @@ function GaleriaTab() {
   if (!items.length) return <EmptyState message="Sin álbumes en la galería" />
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {items.map((g) => (
-        <div key={g._id} className="rounded-lg border p-4">
-          <div className="mb-2 flex items-center justify-between">
-            <span className="font-medium">Mascota #{g.mascota_id}</span>
-            <Badge variant="secondary">{g.fotos.length} foto(s)</Badge>
+      {items.map((g) => {
+        // La colección mezcla dos formas: álbum con `fotos[]` o una sola `url`.
+        const numFotos = g.fotos?.length ?? (g.url ? 1 : 0)
+        return (
+          <div key={g._id} className="rounded-lg border p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <span className="font-medium">
+                {g.mascota_nombre ?? `Mascota #${g.mascota_id}`}
+              </span>
+              <Badge variant="secondary">{numFotos} foto(s)</Badge>
+            </div>
+            <p className="text-sm text-muted-foreground">{g.descripcion || 'Sin descripción'}</p>
+            <p className="mt-2 text-xs text-muted-foreground">{formatDate(g.created_at)}</p>
           </div>
-          <p className="text-sm text-muted-foreground">{g.descripcion || 'Sin descripción'}</p>
-          <p className="mt-2 text-xs text-muted-foreground">{formatDate(g.created_at)}</p>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
