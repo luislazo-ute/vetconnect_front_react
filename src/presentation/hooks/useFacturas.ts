@@ -41,11 +41,13 @@ export function useFacturas() {
     try {
       const factura = await facturasUseCase.create({ cliente: payload.cliente })
       for (const d of payload.detalles) {
+        const subtotal = (d.cantidad * Number(d.precio_unitario)).toFixed(2)
         await detallesFacturaUseCase.create({
           factura: factura.id,
           servicio: d.servicio,
           cantidad: d.cantidad,
           precio_unitario: d.precio_unitario,
+          subtotal,
         })
       }
       if (payload.pago) {

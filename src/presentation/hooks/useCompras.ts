@@ -43,11 +43,13 @@ export function useCompras() {
         numero_factura: payload.numero_factura,
       })
       for (const d of payload.detalles) {
+        const subtotal = (d.cantidad * Number(d.precio_unitario)).toFixed(2)
         await detallesCompraUseCase.create({
           compra: compra.id,
           producto: d.producto,
           cantidad: d.cantidad,
           precio_unitario: d.precio_unitario,
+          subtotal,
         })
       }
     } finally { setSubmitting(false) }
