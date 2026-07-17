@@ -1,11 +1,11 @@
-import type { CrudRepository } from '@/domain/ports/crud-repository'
+import type { CrudRepository, QueryFilters } from '@/domain/ports/crud-repository'
 import type { Paginated } from '@/domain/entities/paginated.entity'
 
 export class CrudUseCase<T> {
   constructor(private readonly repo: CrudRepository<T>) {}
 
-  list(page = 1, search?: string): Promise<Paginated<T>> {
-    return this.repo.list(page, search)
+  list(page = 1, search?: string, filters?: QueryFilters): Promise<Paginated<T>> {
+    return this.repo.list(page, search, filters)
   }
 
   getById(id: number): Promise<T> {

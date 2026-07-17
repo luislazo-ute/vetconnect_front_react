@@ -30,7 +30,8 @@ const hospitalizacionSchema = z.object({
   veterinario: z.number().min(1, 'Seleccione un veterinario'),
   habitacion: z.number().min(1, 'Seleccione una habitación'),
   fecha_ingreso: z.string().min(1, 'Ingrese la fecha de ingreso'),
-  tratamiento: z.string().min(1, 'Ingrese el tratamiento'),
+  motivo: z.string().min(1, 'Ingrese el motivo del ingreso'),
+  tratamiento: z.string().optional(),
 })
 
 type HospitalizacionFormData = z.infer<typeof hospitalizacionSchema>
@@ -52,7 +53,7 @@ export default function HospitalizacionesPage() {
 
   function openCreate() {
     setEditing(null)
-    reset({ mascota: 0, veterinario: 0, habitacion: 0, fecha_ingreso: '', tratamiento: '' })
+    reset({ mascota: 0, veterinario: 0, habitacion: 0, fecha_ingreso: '', motivo: '', tratamiento: '' })
     setOpen(true)
   }
 
@@ -63,6 +64,7 @@ export default function HospitalizacionesPage() {
       veterinario: item.veterinario,
       habitacion: item.habitacion,
       fecha_ingreso: item.fecha_ingreso.slice(0, 10),
+      motivo: item.motivo,
       tratamiento: item.tratamiento,
     })
     setOpen(true)
@@ -143,6 +145,11 @@ export default function HospitalizacionesPage() {
                 <Label htmlFor="fecha_ingreso">Fecha de ingreso</Label>
                 <Input id="fecha_ingreso" type="date" {...register('fecha_ingreso')} aria-invalid={!!errors.fecha_ingreso} />
                 {errors.fecha_ingreso && <p className="text-xs text-destructive">{errors.fecha_ingreso.message}</p>}
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="motivo">Motivo del ingreso</Label>
+                <Textarea id="motivo" rows={2} {...register('motivo')} aria-invalid={!!errors.motivo} />
+                {errors.motivo && <p className="text-xs text-destructive">{errors.motivo.message}</p>}
               </div>
               <div className="space-y-1">
                 <Label htmlFor="tratamiento">Tratamiento</Label>

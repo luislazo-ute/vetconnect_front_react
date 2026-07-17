@@ -66,8 +66,9 @@ export function useCompras() {
   }
 
   async function getDetalles(compraId: number): Promise<DetalleCompra[]> {
-    const data = await detallesCompraUseCase.list(1, '')
-    return data.results.filter((d) => d.compra === compraId)
+    // Filtrar en el backend (?compra=id) en vez de mirar solo la página 1 global.
+    const data = await detallesCompraUseCase.list(1, '', { compra: compraId })
+    return data.results
   }
 
   return {

@@ -22,10 +22,14 @@ import {
 } from '@/presentation/components/ui/alert-dialog'
 import Pagination from '@/presentation/components/Pagination'
 import { LoadingState, ErrorState, EmptyState } from '@/presentation/components/StateViews'
+import { formatPrice, toNumber } from '@/presentation/utils/formatters'
 
 const habitacionSchema = z.object({
   codigo: z.string().min(2, 'Ingrese el código (ej. H-101)'),
+  tipo: z.string().optional(),
+  precio_dia: z.string().min(1, 'Ingrese el precio por día'),
   estado: z.string().min(1, 'Ingrese el estado'),
+  capacidad: z.number().min(1, 'La capacidad debe ser al menos 1'),
 })
 
 type HabitacionFormData = z.infer<typeof habitacionSchema>
@@ -47,13 +51,19 @@ export default function HabitacionesPage() {
 
   function openCreate() {
     setEditing(null)
-    reset({ codigo: '', estado: 'disponible' })
+    reset({ codigo: '', tipo: '', precio_dia: '', estado: 'disponible', capacidad: 1 })
     setOpen(true)
   }
 
   function openEdit(item: typeof items[number]) {
     setEditing(item)
-    reset({ codigo: item.codigo, estado: item.estado })
+    reset({
+      codigo: item.codigo,
+      tipo: item.tipo,
+      precio_dia: item.precio_dia,
+      estado: item.estado,
+      capacidad: item.capacidad,
+    })
     setOpen(true)
   }
 
@@ -114,6 +124,22 @@ export default function HabitacionesPage() {
                 {errors.codigo && <p className="text-xs text-destructive">{errors.codigo.message}</p>}
               </div>
               <div className="space-y-1">
+                <Label htmlFor="tipo">Tipo</Label>
+                <Input id="tipo" placeholder="Individual, UCI…" {...register('tipo')} />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1">
+                  <Label htmlFor="precio_dia">Precio por día</Label>
+                  <Input id="precio_dia" type="number" step="0.01" placeholder="25.00" {...register('precio_dia')} aria-invalid={!!errors.precio_dia} />
+                  {errors.precio_dia && <p className="text-xs text-destructive">{errors.precio_dia.message}</p>}
+                </div>
+                <div className="space-y-1">
+                  <Label htmlFor="capacidad">Capacidad</Label>
+                  <Input id="capacidad" type="number" min={1} {...register('capacidad', { valueAsNumber: true })} aria-invalid={!!errors.capacidad} />
+                  {errors.capacidad && <p className="text-xs text-destructive">{errors.capacidad.message}</p>}
+                </div>
+              </div>
+              <div className="space-y-1">
                 <Label htmlFor="estado">Estado</Label>
                 <Input id="estado" placeholder="disponible / ocupada / mantenimiento" {...register('estado')} aria-invalid={!!errors.estado} />
                 {errors.estado && <p className="text-xs text-destructive">{errors.estado.message}</p>}
@@ -147,6 +173,9 @@ export default function HabitacionesPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Código</TableHead>
+                  <TableHead>Tipo</TableHead>
+                  <TableHead>Precio/día</TableHead>
+                  <TableHead>Cap.</TableHead>
                   <TableHead>Estado</TableHead>
                   <TableHead className="w-24">Acciones</TableHead>
                 </TableRow>
@@ -155,6 +184,9 @@ export default function HabitacionesPage() {
                 {items.map((h) => (
                   <TableRow key={h.id}>
                     <TableCell className="font-medium">{h.codigo}</TableCell>
+                    <TableCell>{h.tipo || '—'}</TableCell>
+                    <TableCell>{formatPrice(toNumber(h.precio_dia))}</TableCell>
+                    <TableCell>{h.capacidad}</TableCell>
                     <TableCell>
                       <Badge variant={estadoColor[h.estado] ?? 'outline'}>{h.estado}</Badge>
                     </TableCell>

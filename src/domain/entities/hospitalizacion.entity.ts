@@ -8,6 +8,8 @@ export interface Hospitalizacion {
   habitacion_codigo: string
   fecha_ingreso: string
   fecha_alta: string | null
+  motivo: string
+  diagnostico: string
   tratamiento: string
   created_at: string
 }

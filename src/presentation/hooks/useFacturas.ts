@@ -72,13 +72,15 @@ export function useFacturas() {
   }
 
   async function getDetalles(facturaId: number): Promise<DetalleFactura[]> {
-    const data = await detallesFacturaUseCase.list(1, '')
-    return data.results.filter((d) => d.factura === facturaId)
+    // Filtrar en el backend (?factura=id); traer solo la página 1 global dejaba
+    // fuera los detalles de facturas que no estuvieran en esos 10 primeros.
+    const data = await detallesFacturaUseCase.list(1, '', { factura: facturaId })
+    return data.results
   }
 
   async function getPagos(facturaId: number): Promise<Pago[]> {
-    const data = await pagosUseCase.list(1, '')
-    return data.results.filter((p) => p.factura === facturaId)
+    const data = await pagosUseCase.list(1, '', { factura: facturaId })
+    return data.results
   }
 
   return {
