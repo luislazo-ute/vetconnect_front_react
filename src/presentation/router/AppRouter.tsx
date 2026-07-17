@@ -36,6 +36,7 @@ const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
 const HospitalizacionesPage = lazy(() => import('../pages/clinica/HospitalizacionesPage'))
 const HabitacionesPage = lazy(() => import('../pages/clinica/HabitacionesPage'))
 const NotificacionesPage = lazy(() => import('../pages/clinica/NotificacionesPage'))
+const RegistrosClinicosPage = lazy(() => import('../pages/mongo/RegistrosClinicosPage'))
 
 // ─── Loader global ──────────────────────────────────────────────────────────
 function PageLoader() {
@@ -207,6 +208,14 @@ export default function AppRouter() {
               element={
                 <ProtectedRoute>
                   <NotificacionesPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/registros-clinicos"
+              element={
+                <ProtectedRoute allowedRoles={[Rol.ADMIN, Rol.DOCTOR]}>
+                  <RegistrosClinicosPage />
                 </ProtectedRoute>
               }
             />
