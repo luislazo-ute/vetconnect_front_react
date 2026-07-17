@@ -126,6 +126,9 @@ export default function AppShell() {
                 <NavLink to="/clinica/habitaciones" className={navLinkClass}>
                   Habitaciones
                 </NavLink>
+                <NavLink to="/facturacion/proveedores" className={navLinkClass}>
+                  Proveedores
+                </NavLink>
               </>
             )}
           </nav>

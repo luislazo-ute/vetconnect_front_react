@@ -27,6 +27,7 @@ const HistorialesPage = lazy(() => import('../pages/pacientes/HistorialesPage'))
 // Facturación (Kevin)
 const ProductosPage = lazy(() => import('../pages/facturacion/ProductosPage'))
 const CategoriasProductoPage = lazy(() => import('../pages/facturacion/CategoriasProductoPage'))
+const ProveedoresPage = lazy(() => import('../pages/facturacion/ProveedoresPage'))
 // Clínica (Johan)
 const VacunasPage = lazy(() => import('../pages/clinica/VacunasPage'))
 const RecetasPage = lazy(() => import('../pages/clinica/RecetasPage'))
@@ -153,7 +154,7 @@ export default function AppRouter() {
               path="/facturacion/proveedores"
               element={
                 <ProtectedRoute allowedRoles={[Rol.ADMIN]}>
-                  <PlaceholderPage title="Proveedores — Kevin" />
+                  <ProveedoresPage />
                 </ProtectedRoute>
               }
             />
