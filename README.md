@@ -93,6 +93,15 @@ y checklist antes del Pull Request.
 
 ---
 
+## Despliegue (CI/CD)
+
+Cada `push` a `main` dispara un workflow de **GitHub Actions** que compila y
+despliega a un **VPS Ubuntu con Nginx**. La documentación completa (pipeline,
+secrets, configuración de Nginx para la SPA y cómo probarlo) está en
+[`docs/DESPLIEGUE.md`](docs/DESPLIEGUE.md).
+
+---
+
 ## Rutas
 
 **Públicas:** `/`, `/servicios`, `/servicios/:id`, `/equipo`, `/contacto`
