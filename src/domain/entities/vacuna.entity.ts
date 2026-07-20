@@ -4,7 +4,7 @@ export interface Vacuna {
   mascota_nombre: string
   nombre_vacuna: string
   fecha_aplicacion: string
-  fecha_proxima: string | null
+  fecha_proxima_dosis: string | null
   lote: string
   veterinario: number
   veterinario_nombre: string

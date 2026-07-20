@@ -58,7 +58,7 @@ export default function RecetasPage() {
     setEditing(item)
     reset({
       mascota: item.mascota,
-      veterinario: item.veterinario,
+      veterinario: item.veterinario ?? 0,
       fecha_emision: item.fecha_emision.slice(0, 10),
       instrucciones: item.instrucciones,
     })

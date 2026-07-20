@@ -28,7 +28,7 @@ const vacunaSchema = z.object({
   mascota: z.number().min(1, 'Seleccione una mascota'),
   nombre_vacuna: z.string().min(2, 'Ingrese el nombre de la vacuna'),
   fecha_aplicacion: z.string().min(1, 'Ingrese la fecha de aplicación'),
-  fecha_proxima: z.string().optional(),
+  fecha_proxima_dosis: z.string().optional(),
   lote: z.string().min(1, 'Ingrese el lote'),
   veterinario: z.number().min(1, 'Seleccione un veterinario'),
   observaciones: z.string().optional(),
@@ -53,7 +53,7 @@ export default function VacunasPage() {
 
   function openCreate() {
     setEditing(null)
-    reset({ mascota: 0, nombre_vacuna: '', fecha_aplicacion: '', fecha_proxima: '', lote: '', veterinario: 0, observaciones: '' })
+    reset({ mascota: 0, nombre_vacuna: '', fecha_aplicacion: '', fecha_proxima_dosis: '', lote: '', veterinario: 0, observaciones: '' })
     setOpen(true)
   }
 
@@ -63,7 +63,7 @@ export default function VacunasPage() {
       mascota: item.mascota,
       nombre_vacuna: item.nombre_vacuna,
       fecha_aplicacion: item.fecha_aplicacion.slice(0, 10),
-      fecha_proxima: item.fecha_proxima ? item.fecha_proxima.slice(0, 10) : '',
+      fecha_proxima_dosis: item.fecha_proxima_dosis ? item.fecha_proxima_dosis.slice(0, 10) : '',
       lote: item.lote,
       veterinario: item.veterinario,
       observaciones: item.observaciones || '',
@@ -72,12 +72,15 @@ export default function VacunasPage() {
   }
 
   async function onSubmit(data: VacunaFormData) {
+    // La próxima dosis es opcional: si va vacía, mandar null (el backend
+    // rechaza una fecha en blanco con 400).
+    const payload = { ...data, fecha_proxima_dosis: data.fecha_proxima_dosis || null }
     try {
       if (editing) {
-        await update(editing.id, data)
+        await update(editing.id, payload)
         toast.success('Vacuna actualizada')
       } else {
-        await create(data)
+        await create(payload)
         toast.success('Vacuna creada')
       }
       setOpen(false)
@@ -132,8 +135,8 @@ export default function VacunasPage() {
                 {errors.fecha_aplicacion && <p className="text-xs text-destructive">{errors.fecha_aplicacion.message}</p>}
               </div>
               <div className="space-y-1">
-                <Label htmlFor="fecha_proxima">Próxima dosis</Label>
-                <Input id="fecha_proxima" type="date" {...register('fecha_proxima')} />
+                <Label htmlFor="fecha_proxima_dosis">Próxima dosis</Label>
+                <Input id="fecha_proxima_dosis" type="date" {...register('fecha_proxima_dosis')} />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="lote">Lote</Label>
@@ -192,7 +195,7 @@ export default function VacunasPage() {
                     <TableCell className="font-medium">{v.mascota_nombre}</TableCell>
                     <TableCell>{v.nombre_vacuna}</TableCell>
                     <TableCell>{formatDate(v.fecha_aplicacion)}</TableCell>
-                    <TableCell>{v.fecha_proxima ? formatDate(v.fecha_proxima) : '—'}</TableCell>
+                    <TableCell>{v.fecha_proxima_dosis ? formatDate(v.fecha_proxima_dosis) : '—'}</TableCell>
                     <TableCell>{v.lote}</TableCell>
                     <TableCell>{v.veterinario_nombre}</TableCell>
                     <TableCell>
